@@ -1,0 +1,2 @@
+[global.databases]
+rocket_app = { url = "postgres://rocket:rocket@localhost/rocket_app"}

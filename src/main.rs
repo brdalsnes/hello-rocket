@@ -22,8 +22,8 @@ fn main() {
         .mount("/", routes![
             routes::index, 
             routes::name,
-            routes::create_post,
-            routes::list_posts])
+            routes::post_new_question,
+            routes::list_quiz])
         .attach(DbConn::fairing())
         .attach(cors::CorsFairing)
         .launch();

@@ -2,7 +2,7 @@ use diesel::{self, prelude::*};
 
 use rocket_contrib::json::Json;
 
-use crate::models::{Post, InsertablePost};
+use crate::models::{Quiz, InsertableQuiz};
 use crate::schema;
 use crate::DbConn;
 
@@ -16,13 +16,13 @@ pub fn name(name: String) -> String {
     format!("Hello, {}!", name.as_str())
 }
 
-#[post("/post", data="<post>")]
-pub fn create_post(
+#[post("/post", data="<quiz>")]
+pub fn post_new_question(
     conn: DbConn,
-    post: Json<InsertablePost>,
+    quiz: Json<InsertableQuiz>,
 ) -> Result<String, String> {
-    let inserted_rows = diesel::insert_into(schema::posts::table)
-        .values(&post.0)
+    let inserted_rows = diesel::insert_into(schema::quiz::table)
+        .values(&quiz.0)
         .execute(&conn.0)
         .map_err(|err| -> String {
             println!("Error inserting row: {:?}", err);
@@ -32,11 +32,11 @@ pub fn create_post(
     Ok(format!("Inserted {} row(s).", inserted_rows))
 }
 
-#[get("/posts")]
-pub fn list_posts(conn: DbConn) -> Result<Json<Vec<Post>>, String> {
-    use crate::schema::posts::dsl::*;
+#[get("/quiz")]
+pub fn list_quiz(conn: DbConn) -> Result<Json<Vec<Quiz>>, String> {
+    use crate::schema::quiz::dsl::*;
 
-    posts.load(&conn.0).map_err(|err| -> String {
+    quiz.load(&conn.0).map_err(|err| -> String {
         println!("Error querying posts: {:?}", err);
         "Error querying posts from the database".into()
     }).map(Json)

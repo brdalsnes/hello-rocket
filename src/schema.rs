@@ -1,8 +1,14 @@
 table! {
-    posts (id) {
+    quiz (id) {
         id -> Int4,
-        title -> Varchar,
-        body -> Text,
-        published -> Bool,
+        question -> Varchar,
+        answer -> Varchar,
+        hint -> Nullable<Varchar>,
+        correct_answers -> Int4,
+        total_answers -> Int4,
     }
 }
+
+allow_tables_to_appear_in_same_query!(
+    quiz,
+);

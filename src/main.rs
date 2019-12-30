@@ -23,7 +23,7 @@ fn main() {
             routes::index, 
             routes::name,
             routes::post_new_question,
-            routes::list_quiz])
+            routes::random])
         .attach(DbConn::fairing())
         .attach(cors::CorsFairing)
         .launch();
